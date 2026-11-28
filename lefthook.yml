@@ -1,0 +1,17 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.{ts,js,cjs,json}"
+      run: bunx biome format --no-errors-on-unmatched {staged_files}
+    typecheck:
+      run: bun run typecheck
+    lint:
+      run: bun run lint
+    architecture:
+      run: bun run check:deps
+
+commit-msg:
+  commands:
+    commitlint:
+      run: bunx commitlint --edit {1}
