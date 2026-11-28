@@ -1,0 +1,62 @@
+{
+  "name": "distributed-wagering-processor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Distributed wagering transaction processor built with Bun, NestJS, PostgreSQL and SQS",
+  "type": "module",
+  "packageManager": "bun@1.4.5",
+  "engines": {
+    "bun": ">=1.4.3"
+  },
+  "scripts": {
+    "dev": "bun --watch src/main.ts",
+    "start": "bun src/main.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint --type-aware",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check:deps": "bun --bun depcruise src --config .dependency-cruiser.cjs",
+    "check": "bun run typecheck && bun run lint && bun run format:check && bun run check:deps",
+    "db:migrate": "bun src/scripts/migrate.ts up",
+    "db:migrate:down": "bun src/scripts/migrate.ts down",
+    "queues:create": "bun src/scripts/create-queues.ts",
+    "test": "bun test --timeout 120000 src test",
+    "test:unit": "bun test src",
+    "test:integration": "bun test --timeout 120000 test/integration",
+    "test:concurrency": "bun test --timeout 120000 test/concurrency",
+    "test:resilience": "bun test --timeout 120000 test/resilience",
+    "test:compose": "docker compose --profile test run --rm --build test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sqs": "3.1178.0",
+    "@mikro-orm/core": "7.2.12",
+    "@mikro-orm/migrations": "7.2.12",
+    "@mikro-orm/nestjs": "7.1.0",
+    "@mikro-orm/postgresql": "7.2.12",
+    "@nestjs/common": "12.6.3",
+    "@nestjs/core": "12.6.3",
+    "@nestjs/platform-express": "12.6.3",
+    "@nestjs/terminus": "12.2.0",
+    "@prometheus-io/client": "0.16.1",
+    "big.js": "7.0.1",
+    "nestjs-pino": "5.3.2",
+    "pino": "10.4.0",
+    "pino-http": "11.0.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.9",
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
+    "@types/big.js": "7.0.0",
+    "@types/bun": "1.4.5",
+    "@types/express": "5.0.6",
+    "dependency-cruiser": "18.9.0",
+    "lefthook": "2.2.4",
+    "oxlint": "1.95.0",
+    "oxlint-tsgolint": "7.0.2009",
+    "typescript": "6.0.3"
+  }
+}
